@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-administrador.xhtml"> 
+      
+<f:metadata>
+	<f:viewAction action="#{novaTurmaBean.init()}" />
+	<f:viewParam name="id" value="#{novaTurmaBean.idCifrado}"/>
+</f:metadata>
+
+<ui:define name="conteudoAdm">
+<h:form id="form" prependId="false">
+	<h1>Nova Turma</h1>
+	
+	<div class="espaco" align="right">
+		<p:commandButton value="Cancelar"
+			immediate="true"
+			ajax="false"
+			action="#{novaTurmaBean.cancelar()}"
+			styleClass="ui-priority-primary"/>
+		<p:spacer width="10"/>
+		<p:commandButton value="Salvar"
+			process="@all"
+			ajax="false"
+			action="#{novaTurmaBean.salvarTurma()}"
+			styleClass="ui-priority-primary"/>
+	</div>
+	
+	<div class="ui-g">
+		<div class="ui-g-6">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Código Turma:"/>
+				<p:inputText value="#{novaTurmaBean.turma.codTurma}" disabled="true"/>
+				
+				<p:outputLabel value="Nome Turma:"/>
+				<p:inputText value="#{novaTurmaBean.turma.nome}"/>
+				
+				<p:outputLabel value="Professor:"/>
+				<p:selectOneMenu value="#{novaTurmaBean.turma.usuario.codUsuario}">
+					<f:selectItems value="#{novaTurmaBean.listaProfessores}" var="professor"
+						itemLabel="#{professor.nome}" itemValue="#{professor.codUsuario}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Total de Alunos: "/>
+				<p:inputText id="totalAlunos"
+					value="#{novaTurmaBean.turma.alunos.size()}" 
+					disabled="true"/>
+				
+				<p:outputLabel value="Status:"
+					style="text-align: left;"/>
+				<p:selectOneMenu value="#{novaTurmaBean.turma.status}">
+					<f:selectItem itemLabel="Ativo" itemValue="Ativo"/>
+					<f:selectItem itemLabel="Inativo" itemValue="Inativo"/>
+				</p:selectOneMenu>			
+				
+			</h:panelGrid>
+		</div>
+		
+		<div class="ui-g-6">
+			<p:dataTable 
+				id="tabela"
+				value="#{novaTurmaBean.turma.alunos}"
+				var="aluno"
+				rows="15"
+				emptyMessage="Não há Alunos vinculados a essa Turma."
+				styleClass="espaco">
+				
+				<p:column headerText="Cod. Aluno"
+					width="20%">
+					<h:outputText value="#{aluno.codUsuario}" />
+				</p:column>	
+				
+				<p:column headerText="Nome Aluno"
+					width="60%">
+					<h:outputText value="#{aluno.nome}" />
+				</p:column>	
+				
+				<p:column width="20%">
+					<p:commandButton	
+						action="#{novaTurmaBean.removerAluno(aluno)}"
+						update="tabela totalAlunos" 
+						icon="ui-icon-trash"/>
+				</p:column>	
+			</p:dataTable>
+			
+			<div align="center">
+				<p:commandButton value="Adicionar Aluno"
+					onclick="PF('adicionarAlunoDialogWidgetVar').show();"
+					styleClass="ui-priority-primary"/>
+			</div>
+		</div>
+	</div>
+	
+	<p:dialog id="adicionarAlunoDialog"
+		widgetVar="adicionarAlunoDialogWidgetVar"
+		header="Adicionar Novo Aluno"
+		modal="true"
+		height="80">
+		
+		<div align="center" style="margin-top: 30px;">
+			<p:selectOneMenu id="novoAlunoSelect" value="#{novaTurmaBean.codUsuarioSelecionado}"
+				style="width: 80%;">
+				<f:selectItems value="#{novaTurmaBean.listaAlunos}" var="aluno"
+					itemLabel="#{aluno.nome}" itemValue="#{aluno.codUsuario}"/>
+			</p:selectOneMenu>
+		</div>
+		
+		<f:facet name="footer">
+			<p:commandButton value="Adicionar"
+				actionListener="#{novaTurmaBean.adicionarNovoAluno()}"
+				process="@parent"
+				update="tabela totalAlunos"
+				oncomplete="PF('adicionarAlunoDialogWidgetVar').hide();"
+				styleClass="ui-priority-primary"/>
+		</f:facet>
+	</p:dialog>
+
+</h:form>		
+</ui:define>
+</ui:composition>

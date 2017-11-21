@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-administrador.xhtml"> 
+      
+<f:metadata>
+	<f:viewAction action="#{cadastroTurmasBean.init()}" />
+</f:metadata>
+
+<ui:define name="conteudoAdm">
+<h:form id="form">
+	<h1>Cadastro de Turmas</h1>
+	
+	<div align="right" class="espaco">
+		<p:button value="Nova Turma"
+			outcome="#{paginasBean.novaTurma}"
+			styleClass="ui-priority-primary"/>
+	</div>
+	
+	<p:dataTable value="#{cadastroTurmasBean.listaTurmas}"
+		var="turma"
+		rowKey="#{turma}"
+		emptyMessage="Não há Turmas cadastradas."
+		styleClass="espaco">
+	
+		<p:column headerText="Cod. Turma"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.codTurma}" />
+		
+		</p:column>
+		
+		<p:column headerText="Nome">
+			<h:outputText value="#{turma.nome}" />
+		
+		</p:column>
+		
+		<p:column headerText="Professor">
+			<h:outputText value="#{turma.usuario.nome}" />
+		
+		</p:column>
+		
+		<p:column headerText="Total Alunos"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.campoVirtualTotalDeAlunos}" />
+		
+		</p:column>
+		
+		<p:column headerText="Status"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.status}" />
+		
+		</p:column>
+		
+		<p:column width="5%">
+			<p:button icon="ui-icon-wrench"
+				outcome="#{paginasBean.novaTurma}">
+				<f:param name="id" value="#{globalBean.cifrar(turma.codTurma)}"/>	
+			</p:button>
+		</p:column>
+	</p:dataTable>
+
+</h:form>		
+</ui:define>
+</ui:composition>

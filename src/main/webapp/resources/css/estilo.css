@@ -1,0 +1,90 @@
+@CHARSET "ISO-8859-1";
+body {
+	margin: 0px;
+}
+
+h1{
+	font-family: Arial, sans-serif;
+}
+
+.conteudo {
+	margin-top: 50x;
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-bottom: 8px;
+}
+
+.topbar{
+	padding: 0px; 
+	position: fixed; 
+	top: 0; 
+	background: #0E395A; 
+	height: 50px;
+	width: 100%;
+}
+
+#topbar ul {
+	list-style: none;
+	position: fixed;
+	float: right;
+	right: 30px;
+	margin: 7px 0px;
+}
+
+#topbar ul li { 
+	display: inline; 
+}
+
+.icone-topbar {
+	fonte-size: 36px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.nome-topbar{
+	height: 20px;
+	position: fixed;
+	float: left;
+	left: 30px;
+	margin: 15px 0px;
+	vertical-align: middle;
+	color: #FFFFFF;
+}
+
+.layout_menu {
+	width: 300px;
+	height: 100%;
+	elevation: 8px;
+}
+
+.layout_main {
+	margin-left: 20px;	
+}
+
+.botao_menu {
+	width: 250px;
+	height: 50px;
+	color: #FFFFFF;
+	background-color: #0E395A;
+	margin-top: 10px;
+}
+
+.combo-box {
+	width: 70%;
+	margin-left: 15%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.espaco {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.flex {
+	display: flex;
+}
+
+.bold {
+	font-weight: bold;
+} 

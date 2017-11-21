@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE jboss-web>
+
+<jboss-web>
+	<context-root>/</context-root>
+
+  <!-- configuracao default do webservice para basic autentication -->
+  <security-domain>other</security-domain>
+</jboss-web>

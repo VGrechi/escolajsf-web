@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<meta charset="utf-8" />
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        
+        <h:outputStylesheet library="css" name="estilo.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>
+		
+	</h:head>
+
+	<h:body styleClass="login_body">
+	<h:form prependId="false">
+	
+	<p:focus for="j_login"/>
+	
+	<div style="margin-top: 150px;" align="center">
+		<div class="ui-g caixa_login">
+			<div class="ui-g-7 borda_div">
+				<div align="left">
+					<p:outputLabel value="Escola"
+						styleClass="label_escola"/>				
+				</div>
+					
+				<div class="logo" align="center">
+					<p:graphicImage library="imagens" name="jsf-logo.png"/>
+				</div>
+			</div>
+			<div class="ui-g-5">
+				<h:messages autoUpdate="true"
+					styleClass="msg"
+					errorClass="error_msg"/>
+					
+				<p:outputLabel value="E-mail:"
+					styleClass="bold espaco label"/>
+	
+				<p:inputText 
+					id="j_login" 
+					name="j_login"
+					value="#{loginBean.email}"
+					styleClass="input espaco"/>
+	
+					
+				<br/>	
+					<p:spacer height="20px"/>
+				<br/>
+				
+				<p:outputLabel value="Senha:"
+					styleClass="bold espaco label"/>
+					
+				<p:password  
+					id="j_senha" 
+					value="#{loginBean.senha}"
+					styleClass="input espaco"/>
+					
+				<br/>	
+					<p:spacer height="20px"/>
+				<br/>
+		
+				<p:commandButton value="Entrar"
+					action="#{loginBean.fazerLogin()}"
+					styleClass="botao espaco" />
+			</div>
+	
+			
+				
+		</div>
+
+	</div>
+		
+			
+	</h:form>
+	</h:body>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-professor.xhtml"> 
+      
+<f:metadata>
+	<f:viewAction action="#{atividadesBean.init()}"/>
+</f:metadata>
+
+	<ui:define name="conteudoProf">
+	<h:form id="form">
+	<h1>Atividades</h1>
+	
+	<div align="right" style="margin-bottom: 20px;">
+		<p:commandButton value="Cadastrar Nova Atividade"
+			action="#{atividadesBean.abrirDialog(null, false)}"
+			oncomplete="PF('novaAtividadeDialogWidgetVar').show();"
+			update=":form:novaAtividadeDialog"
+			styleClass="ui-priority-primary"/>
+		
+	</div>
+	
+	<p:dataTable value="#{atividadesBean.listaAtividades}"
+		var="atividade"
+		emptyMessage="Não há Atividades cadastradas.">
+	
+		<p:column headerText="Cod. Atividade"
+			width="10%">
+			<h:outputText value="#{atividade.codAtividade}"/>
+		</p:column>
+		
+		<p:column headerText="Data Início"
+			width="10%">
+			<h:outputText value="#{atividade.dataInicial}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Data Fim"
+			width="10%">
+			<h:outputText value="#{atividade.dataFinal}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</p:column>
+		
+		<p:column headerText="Descrição"
+			width="60%">
+			<h:outputText value="#{atividade.descricao}" />	
+		</p:column>
+		
+		
+		<p:column width="10%">
+			<p:commandButton icon="ui-icon-wrench"
+				action="#{atividadesBean.abrirDialog(atividade, true)}"
+				oncomplete="PF('novaAtividadeDialogWidgetVar').show();"
+				update=":form:novaAtividadeDialog"/>
+				
+			<p:commandButton icon="ui-icon-trash"
+				action="#{atividadesBean.deletarAtividade(atividade)}"
+				update="@(.ui-datatable)"/>
+		
+		</p:column>
+	</p:dataTable>
+	
+	<p:dialog id="novaAtividadeDialog"
+		widgetVar="novaAtividadeDialogWidgetVar"
+		header="Cadastrar Nova Atividade"
+		modal="true">
+		
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Código Atividade:"/>
+			<p:inputText value="#{atividadesBean.atividade.codAtividade}"
+					disabled="true"/>
+			<p:outputLabel value="Data Início:"/>
+			<p:calendar value="#{atividadesBean.atividade.dataInicial}"
+				pattern="dd/MM/yyyy"/>
+			<p:outputLabel value="Data Fim:"/>
+			<p:calendar value="#{atividadesBean.atividade.dataFinal}"
+				pattern="dd/MM/yyyy"/>
+			<p:outputLabel value="Descrição:"/>
+			<p:inputText value="#{atividadesBean.atividade.descricao}"/>
+		</h:panelGrid>
+		
+		<f:facet name="footer">
+			<div align="center">
+				
+				<p:commandButton value="Cancelar"
+					onclick="PF('novaAtividadeDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+				<p:spacer width="10"/>
+				<p:commandButton value="Salvar"
+					action="#{atividadesBean.salvarAtividade()}"
+					update="@(.ui-datatable)"
+					oncomplete="PF('novaAtividadeDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+				
+			</div>
+		</f:facet>	
+	</p:dialog>
+	
+	
+	</h:form>
+	
+	</ui:define>
+</ui:composition>

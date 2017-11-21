@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template.xhtml"> 
+   
+<f:metadata>
+	<f:viewAction action="#{portalAlunoBean.init()}"/>
+</f:metadata>
+
+<ui:define name="conteudo">
+
+	 <h:outputStylesheet library="css" name="portal-aluno.css"/>
+
+<h:form id="form">
+	
+	<p:tabView id="tabView" dynamic="true">
+		<p:tab title="Entregar">
+			<div class="ui-g espaco" align="center">
+				<p:selectOneMenu value="#{portalAlunoBean.codTurmaSelecionada}"
+					styleClass="combo-box"
+					style="width: 70%;" >
+					
+					<f:selectItem itemValue="#{null}" itemLabel="Selecione a Disciplina"/>
+					
+					<f:selectItems value="#{portalAlunoBean.listaTurmas}" var="turma"
+						itemValue="#{turma.codTurma}" itemLabel="#{turma.nome}"/>
+					
+					<p:ajax event="change" listener="#{portalAlunoBean.onChangeDisciplina()}"
+						update=":form:tabView:panelAtividades @form" process="@this"/> 
+				
+				</p:selectOneMenu>
+			</div>
+			
+				
+				<div class="ui-g">
+					<div class="ui-g-2"></div>
+					<div class="ui-g-8">
+						<p:panel id="panelAtividades"
+							rendered="#{portalAlunoBean.mostrarPanel}"
+							styleClass="espaco">
+						
+						<p:outputLabel value="Não há Atividades vinculadas a essa turma"
+								rendered="#{portalAlunoBean.listaAtividades.size() == 0}"/>
+					
+						<ui:repeat var="entidade" value="#{portalAlunoBean.listaAtividades}">
+							
+							<p:outputPanel styleClass="painel_atividade">
+								<div class="ui-g">
+									<div class="ui-g-4">
+				
+										<div class="ui-g">
+											<div class="ui-g-6">
+												<p:outputLabel value="Data Inicial: "
+													styleClass="bold"/>
+											</div>
+											<div class="ui-g-6">
+												<p:outputLabel value="#{entidade.dataInicial}">
+													<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</p:outputLabel>
+											</div>
+										</div>
+										
+										<div class="ui-g">
+											<div class="ui-g-6">
+												<p:outputLabel value="Data Final: "
+													styleClass="bold"/>
+											</div>
+											<div class="ui-g-6">
+												<p:outputLabel value="#{entidade.dataFinal}">
+													<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</p:outputLabel>
+											</div>
+										</div>
+										
+										<div class="ui-g">
+											<div class="ui-g-6">
+												<p:outputLabel value="Descrição: "
+													styleClass="bold"/>
+											</div>
+											<div class="ui-g-6">
+												<p:outputLabel value="#{entidade.descricao}"/>
+											</div>
+										</div>
+									</div>
+									
+									<div class="ui-g-2"/>
+									
+									<div class="ui-g-6">
+										<div class="ui-g">
+											<p:outputLabel value="Escolha um arquivo para vincular a Atividade:"
+												styleClass="espaco"/>
+																				
+											<p:commandButton value="Selecione"
+												action="#{portalAlunoBean.selecionarAtividade(entidade.codAtividade)}"
+												oncomplete="PF('dialogAnexarArquivoWidgetVar').show();"
+												styleClass="ui-priority-primary"/>
+											
+										</div>
+									</div>
+								</div>
+							
+							</p:outputPanel>
+							<hr />
+						</ui:repeat>
+						</p:panel>
+						
+					</div>
+					<div class="ui-g-2"></div>
+			</div>
+		</p:tab>
+		
+		<p:tab title="Consultar">
+			
+			<p:dataTable value="#{portalAlunoBean.listaEntregas}"
+				var="entrega"
+				emptyMessage="Ainda não foi feita nenhuma Entrega.">
+				
+				<p:column headerText="Data Submetido"
+					width="10%">
+					<h:outputText value="#{entrega.dataSubmetido}">]
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</p:column>
+			
+				<p:column headerText="Nome Turma"
+					width="20%">
+					<h:outputText value="#{entrega.turma.nome}"/>
+				</p:column>
+				
+				<p:column headerText="Descrição Atividade"
+					width="50%">
+					<h:outputText value="#{entrega.atividade.descricao}"/>
+				</p:column>
+				
+				<p:column width="8%">
+					<p:commandButton 
+						action="#{portalAlunoBean.tratarFileDownload(entrega)}"
+						ajax="false"
+						icon="ui-icon-arrowthickstop-1-s"/>
+				</p:column>
+				
+			
+			
+			</p:dataTable>
+			
+		</p:tab>
+	</p:tabView>
+	
+	<p:dialog id="dialogAnexarArquivo"
+		widgetVar="dialogAnexarArquivoWidgetVar"
+		modal="true"
+		width="200">
+	
+		<p:fileUpload mode="advanced"
+			dragDropSupport="true"
+			multiple="false"
+			auto="true"
+			sizeLimit="#{10 * 1024 * 1024}"
+			value="#{portalAlunoBean.arquivoAnexado}"
+			fileUploadListener="#{portalAlunoBean.trataFileUpload}"
+			cancelLabel="Cancelar"
+			uploadLabel="Enviar"
+			label="Escolher"
+			oncomplete="PF('dialogAnexarArquivoWidgetVar').hide();"
+			styleClass="espaco"/>
+			
+	</p:dialog>
+</h:form>
+</ui:define>
+</ui:composition>

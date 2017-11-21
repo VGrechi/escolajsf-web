@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Version: SNAPSHOT
+Built-By: Victor
+Specification-Title: EscolaJSF
+Build-Jdk: 1.8.0_141
+Created-By: Maven Integration for Eclipse
+Specification-Version: 0.0.1-SNAPSHOT
+

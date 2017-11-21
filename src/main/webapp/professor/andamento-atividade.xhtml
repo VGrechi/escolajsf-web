@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-professor.xhtml"> 
+ 
+<f:metadata>
+	<f:viewAction action="#{andamentoAtividadesBean.init()}"/>
+	<f:viewParam name="a" value="#{andamentoAtividadesBean.codAtividadeCifrado}"/>
+	<f:viewParam name="t" value="#{andamentoAtividadesBean.codTurmaCifrado}"/>
+</f:metadata>
+
+<ui:define name="conteudoProf">
+<h:form id="form">
+	<h1>Andamento da Atividade</h1>
+	
+	<div class="ui-g">
+		<div class="ui-g-12 ui-lg-5">
+			<p:panel styleClass="espaco">
+			<f:facet name="header">Detalhes da Turma</f:facet>
+			<div class="ui-g">
+				<div class="ui-g-6">
+					<p:outputLabel value="Código Turma: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-6">
+					<p:outputLabel value="#{andamentoAtividadesBean.turma.codTurma}"/>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-6">
+					<p:outputLabel value="Nome Turma: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-6">
+					<p:outputLabel value="#{andamentoAtividadesBean.turma.nome}"/>
+				</div>
+			</div>
+		</p:panel>
+		
+		
+		<p:panel styleClass="espaco">
+			<f:facet name="header">Detalhes da Atividade</f:facet>
+			<div class="ui-g">
+				<div class="ui-g-6">
+					<p:outputLabel value="Código Atividade: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-6">
+					<p:outputLabel value="#{andamentoAtividadesBean.atividade.codAtividade}"/>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-6">
+					<p:outputLabel value="Data Inicial: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-6">
+					<p:outputLabel value="#{andamentoAtividadesBean.atividade.dataInicial}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</p:outputLabel>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-6">
+					<p:outputLabel value="Data Final: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-6">
+					<p:outputLabel value="#{andamentoAtividadesBean.atividade.dataFinal}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</p:outputLabel>
+				</div>
+			</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:outputLabel value="Descrição: "
+						styleClass="bold"/>
+				</div>
+				<div class="ui-g-12">
+					<p:outputLabel value="#{andamentoAtividadesBean.atividade.descricao}"/>
+				</div>
+			</div>
+		</p:panel>
+		</div>
+		<div class="ui-g-12 ui-lg-7">
+			<p:dataTable value="#{andamentoAtividadesBean.listaEntregas}"
+				var="entidade"
+				emptyMessage="Ainda não foram entregues arquivos para essa Atividade."
+				styleClass="espaco">
+				
+				<p:column headerText="Nome do Aluno">
+					<h:outputText value="#{entidade.usuario.nome}" />
+				</p:column>
+				
+				<p:column headerText="Data Submetido">
+					<h:outputText value="#{entidade.dataSubmetido}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Nome Arquivo">
+					<h:outputText value="#{entidade.nomeArquivo}" />
+				</p:column>
+				
+				<p:column width="8%">
+					<p:commandButton 
+						action="#{andamentoAtividadesBean.tratarFileDownload(entidade)}"
+						ajax="false"
+						icon="ui-icon-arrowthickstop-1-s"/>
+				</p:column>
+					
+			</p:dataTable>
+			
+		</div>
+	</div>
+
+	</h:form>
+	</ui:define>
+</ui:composition>

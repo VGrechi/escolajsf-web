@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-professor.xhtml"> 
+ 
+<f:metadata>
+	<f:viewAction action="#{turmasBean.init()}"/>
+</f:metadata>
+
+<ui:define name="conteudoProf">
+<h:form id="form">
+	<h1>Turmas</h1>
+	
+	<p:dataTable id="tabelaTurmas"
+		value="#{turmasBean.listaTurmas}"
+		var="turma"
+		paginator="true"
+		rows="5"
+		emptyMessage="Não há Turmas vinculadas ao seu usuário.">
+	
+		<p:column headerText="Cod. Turma"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.codTurma}" />
+		
+		</p:column>
+		
+		<p:column headerText="Nome">
+			<h:outputText value="#{turma.nome}"
+				 />
+		
+		</p:column>
+		
+		<p:column headerText="Professor">
+			<h:outputText value="#{turma.usuario.nome}" />
+		
+		</p:column>
+		
+		<p:column headerText="Total Alunos"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.campoVirtualTotalDeAlunos}" />
+		
+		</p:column>
+		
+		<p:column headerText="Status"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{turma.status}" />
+		
+		</p:column>
+		
+		<p:column width="9%">
+			<p:commandButton id="btnAddAtividade"
+				actionListener="#{turmasBean.selecionaTurma(turma, false)}"
+				icon="ui-icon-plusthick">
+				<p:tooltip value="Adicionar Atividade" for="btnAddAtividade"/>	
+			</p:commandButton>
+			
+			<p:commandButton id="btnVisualizarAtividade"
+				actionListener="#{turmasBean.selecionaTurma(turma, true)}"
+				immediate="true"
+				update="@form"
+				icon="ui-icon-search">
+				<p:tooltip value="Visualizar Atividades" for="btnVisualizarAtividade"/>	
+			</p:commandButton>
+		</p:column>
+	</p:dataTable>
+	
+		
+	<p:panel id="panelTurmaDetalhes"	
+		rendered="#{turmasBean.turmaSelecionada}" 
+		styleClass="espaco">
+		<f:facet name="header">Detalhes da Turma</f:facet>
+	
+		<div class="ui-g espaco">
+			<div class="ui-g-4">		
+				<p:outputLabel value="Código Turma: "
+					styleClass="bold"/>
+				<p:spacer width="10"/>
+				<p:outputLabel value="#{turmasBean.turma.codTurma}"/>
+			</div>
+			<div class="ui-g-4">
+				<p:outputLabel value="Nome Turma: "
+					styleClass="bold"/>
+				<p:spacer width="10"/>
+				<p:outputLabel value="#{turmasBean.turma.nome}"/>				
+			</div>
+			<div class="ui-g-4">	
+				<p:outputLabel value="Professor: "
+					styleClass="bold"/>
+				<p:spacer width="10"/>
+				<p:outputLabel value="#{turmasBean.turma.usuario.nome}"/>				
+			</div>
+			<div class="ui-g-4">
+				<p:outputLabel value="Total de Alunos"
+					styleClass="bold"/>
+				<p:spacer width="10"/>
+				<p:outputLabel value="#{turmasBean.turma.campoVirtualTotalDeAlunos}"/>				
+			</div>
+			<div class="ui-g-4">
+				<p:outputLabel value="Status Turma: "
+					styleClass="bold"/>
+				<p:spacer width="10"/>
+				<p:outputLabel value="#{turmasBean.turma.status}"/>				
+			</div>
+			
+		</div>
+		
+		<div class="ui-g">
+			<p:dataTable id="tabelaAtividades"
+				value="#{turmasBean.turma.atividades}"
+				var="atividade"
+				emptyMessage="Não há Atividades vinculadas a essa Turma.">
+			
+				<p:column headerText="Cod. Atividade"
+					width="10%">
+					<h:outputText value="#{atividade.codAtividade}" />
+				
+				</p:column>
+				
+				<p:column headerText="Data Início"
+					width="10%">
+					<h:outputText value="#{atividade.dataInicial}">
+						<f:convertDateTime pattern="dd/MM/yyy"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Data Fim"
+					width="10%">
+					<h:outputText value="#{atividade.dataFinal}">
+						<f:convertDateTime pattern="dd/MM/yyy"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Descrição"
+					width="60%">
+					<h:outputText value="#{atividade.descricao}" />
+				
+				</p:column>
+				
+				<p:column width="10%">
+					<p:button icon="ui-icon-search"
+						outcome="andamento-atividade.xhtml">
+						
+						<f:param name="a" value="#{globalBean.cifrar(atividade.codAtividade)}"/>
+						<f:param name="t" value="#{globalBean.cifrar(turmasBean.turma.codTurma)}"/>	
+					</p:button>
+				
+				</p:column>
+				
+			</p:dataTable>
+		</div>
+	</p:panel>
+	
+	<p:dialog id="novaAtividadeDialog"
+		widgetVar="novaAtividadeDialogWidgetVar"
+		header="Cadastrar Nova Atividade"
+		modal="true"
+		height="80"
+		width="320"
+		resizable="false">
+		
+		<div class="ui-g" align="center" style="margin-top: 30px;">
+			<p:selectOneMenu value="#{turmasBean.atividade.codAtividade}">
+				<f:selectItems value="#{turmasBean.listaAtividades}" var="atividade"
+					itemLabel="#{atividade.descricao}" itemValue="#{atividade.codAtividade}"/>
+			</p:selectOneMenu>
+		</div>
+		
+		<f:facet name="footer">
+			<div align="center">
+				<p:commandButton value="Cancelar"
+					onclick="PF('novaAtividadeDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+				<p:spacer width="10"/>
+				<p:commandButton value="Salvar"
+					update="form:panelTurmaDetalhes"
+					process="@form"
+					actionListener="#{turmasBean.salvarAtividade()}"
+					oncomplete="PF('novaAtividadeDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>		
+			</div>
+		</f:facet>	
+	</p:dialog>
+
+	</h:form>
+	</ui:define>
+</ui:composition>

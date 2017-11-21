@@ -1,0 +1,337 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.javaee.escola</groupId>
+  <artifactId>EscolaJSF</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<!-- Build number que eh populada pelo Jenkins em tempo de empacotamento
+			Base: https://tedvinke.wordpress.com/2013/04/20/using-jenkins-build-version-with-maven/ -->
+		<build.number>SNAPSHOT</build.number>
+		
+		<!-- Versao do Java -->
+		<maven.compiler.source>1.8</maven.compiler.source>
+   		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<!-- Inicio: Dependencias fornecidas e configuradas pelo JBoss Wilfly 10 -->
+
+		<version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.1_spec>1.0.0.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.1_spec>
+
+		<version.org.jboss.spec.javax.faces.jboss-jsf-api_2.2_spec>2.2.12</version.org.jboss.spec.javax.faces.jboss-jsf-api_2.2_spec>
+
+		<version.org.jboss.weld.weld>2.3.2.Final</version.org.jboss.weld.weld>
+
+		<version.org.hibernate.validator>5.2.3.Final</version.org.hibernate.validator>
+
+		<version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.2_spec>2.0.2.Final</version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.2_spec>
+		
+		<version.javax.mail>1.5.5</version.javax.mail>
+
+		<!-- Fim: Dependencias fornecidas e configuradas no JBoss Wilfly 10 -->
+		
+		<!-- JavaMail API SMTP Provider -->
+		<version.javax.mail.smtp>1.5.5</version.javax.mail.smtp>
+
+		<!-- Omnifaces -->
+		<omnifaces.version>2.0</omnifaces.version>
+
+		<!-- Primefaces -->
+		<primefaces.version>6.0</primefaces.version>
+
+		<!-- Primefaces - Extensions, KeyFilter -->
+		<primefaces.extensions.version>4.0.0</primefaces.extensions.version>
+		
+		<!-- XML Worker - Processamento de XML -->
+		<itextpdf.tool.version>5.5.4</itextpdf.tool.version>
+		
+		<!-- iTextPDF - Ferramenta para geracao de PDF-->
+		<itextpdf.version>5.5.4</itextpdf.version>
+
+		<!-- Commons Lang (utilidades) -->
+		<commons.lang3.version>3.4</commons.lang3.version>
+
+		<!-- Client Libraries for Google Maps Web Services -->
+		<google.api.maps.services.version>0.1.9</google.api.maps.services.version>
+
+		<!-- Spring Security (autentição e autorização) -->
+		<spring.security.core.version>3.2.5.RELEASE</spring.security.core.version>
+		<spring.security.web.version>3.2.5.RELEASE</spring.security.web.version>
+		<spring.security.config.version>3.2.5.RELEASE</spring.security.config.version>
+
+		<!-- Commons File Upload -->
+		<commons.io.version>2.4</commons.io.version>
+
+		<!-- AWS SDK para Java : Amazon S3, Amazon EC2, DynamoDB -->
+		<aws.java.sdk.version>1.11.105</aws.java.sdk.version>
+
+		<!-- Guava: Google Core Libraries For Java -->
+		<com.google.guava.version>19.0</com.google.guava.version>
+
+		<!-- Cloning: biblioteca para deep-clone de objetos https://github.com/kostaskougios/cloning -->
+		<uk.com.robust-it.version>1.9.2</uk.com.robust-it.version>
+
+		<!-- imgscalr : simple and efficient image scaling library implemented 
+			purely in java -->
+		<org.imgscalr.version>4.2</org.imgscalr.version>
+		
+		<!-- Apache Tika -->
+		<org.apache.tika.version>1.11</org.apache.tika.version>
+		
+		<!-- JDBC - Implementacao MS SQL Server -->
+		<com.microsoft.sqlserver.jdbc.driver.version>4.2.0</com.microsoft.sqlserver.jdbc.driver.version>
+
+		<!-- Logging - Log4J -->
+		<log4j.version>1.2.17</log4j.version>
+
+		<!-- Commons Logging (abstrai a implementação de logging) -->
+		<commons.logging.version>1.1.3</commons.logging.version>
+		
+		<!-- JASYPT: Java Simplified Encryption  -->
+		<org.jasypt.version>1.9.2</org.jasypt.version>
+		
+		<!-- Apache POI - Java Api p/ trabalhar com arquivos do MS Office
+			http://poi.apache.org/ -->
+		<org.apache.poi.version>3.14</org.apache.poi.version>
+		
+		<!-- PrettyTime Library - usada para converter data em string "# minutos atras" -->
+		<prettytime.version>3.2.7.Final</prettytime.version> 
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
+			<version>${version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.1_spec}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
+			<version>${version.org.jboss.spec.javax.faces.jboss-jsf-api_2.2_spec}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core-impl</artifactId>
+			<version>${version.org.jboss.weld.weld}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${version.org.hibernate.validator}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.jboss.spec.javax.xml.ws</groupId>
+            <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
+            <version>${version.org.jboss.spec.javax.xml.ws.jboss-jaxws-api_2.2_spec}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+	        <groupId>com.sun.mail</groupId>
+	        <artifactId>javax.mail</artifactId>
+	        <version>${version.javax.mail}</version>
+	        <scope>provided</scope>
+        </dependency>
+        
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>smtp</artifactId>
+		    <version>${version.javax.mail.smtp}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>${omnifaces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>${primefaces.extensions.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.maps</groupId>
+			<artifactId>google-maps-services</artifactId>
+			<version>${google.api.maps.services.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.core.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.web.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.config.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons.io.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>${aws.java.sdk.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>uk.com.robust-it</groupId>
+			<artifactId>cloning</artifactId>
+			<version>${uk.com.robust-it.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>${org.imgscalr.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>${org.apache.tika.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons.logging.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jasypt</groupId>
+		    <artifactId>jasypt</artifactId>
+		    <version>${org.jasypt.version}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>${org.apache.poi.version}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>${org.apache.poi.version}</version>
+		    <scope>compile</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.ocpsoft.prettytime</groupId>
+			<artifactId>prettytime</artifactId>
+			<version>${prettytime.version}</version>
+			<scope>compile</scope>
+		</dependency>
+	
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.6</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-war-plugin</artifactId>
+			    <configuration>
+			       <manifest>
+	                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+	                </manifest>
+	                <archive>
+	                    <manifestEntries>
+	                        <Specification-Title>${project.name}</Specification-Title>
+	                        <Specification-Version>${project.version}</Specification-Version>
+	                        <Implementation-Version>${build.number}</Implementation-Version>
+	                    </manifestEntries>
+	                </archive>
+			    </configuration>
+			</plugin>
+		</plugins>
+		
+	</build>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+		
+	</repositories>
+</project>

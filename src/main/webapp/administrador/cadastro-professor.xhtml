@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-administrador.xhtml"> 
+
+<f:metadata>
+	<f:viewAction action="#{cadastroProfessorBean.init()}" />
+</f:metadata>
+
+<ui:define name="conteudoAdm">
+<h:form id="form">
+	<h1>Cadastro de Professores</h1>
+	
+	<p:growl autoUpdate="true"/>
+	
+	<div align="right" class="espaco">
+		<p:commandButton value="Novo Professor"
+			action="#{cadastroProfessorBean.abrirDialog(null, false)}"
+			oncomplete="PF('novoProfessorDialogWidgetVar').show();"
+			update=":form:novoProfessorDialog"
+			styleClass="ui-priority-primary"/>
+	</div>
+	
+	<p:dataTable value="#{cadastroProfessorBean.listaProfessores}"
+		var="professor"
+		rowKey="#{professor}"
+		emptyMessage="Não há Professores cadastrados."
+		styleClass="espaco">
+	
+		<p:column headerText="Cod. Professor"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{professor.codUsuario}" />
+		
+		</p:column>
+		
+		<p:column headerText="Nome">
+			<h:outputText value="#{professor.nome}" />
+		
+		</p:column>
+		
+		<p:column headerText="E-mail">
+			<h:outputText value="#{professor.email}" />
+		
+		</p:column>
+		
+		<p:column width="12%">
+			<p:commandButton icon="ui-icon-wrench"
+				action="#{cadastroProfessorBean.abrirDialog(professor, true)}"
+				oncomplete="PF('novoProfessorDialogWidgetVar').show();"
+				update=":form:novoProfessorDialog"/>
+				
+			<p:commandButton icon="ui-icon-trash"
+				action="#{cadastroProfessorBean.deletarProfessor(professor)}"
+				update="@(.ui-datatable)"/>
+		</p:column>
+	</p:dataTable>
+	
+	
+	
+	<p:dialog id="novoProfessorDialog"
+		widgetVar="novoProfessorDialogWidgetVar"
+		header="Cadastrar Novo Professor"
+		modal="true">
+		
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Código Professor:"/>
+			<p:inputText value="#{cadastroProfessorBean.professor.codUsuario}"
+					disabled="true"/>
+			<p:outputLabel value="Nome Professor:"/>
+			<p:inputText value="#{cadastroProfessorBean.professor.nome}"/>
+			<p:outputLabel value="E-mail Professor:"/>
+			<p:inputText value="#{cadastroProfessorBean.professor.email}"/>
+			<p:outputLabel value="Senha Professor:"/>
+			<p:password value="#{cadastroProfessorBean.professor.senha}"/>
+			
+			
+		</h:panelGrid>
+		
+		<f:facet name="footer">
+			<div align="center">
+				<p:commandButton value="Cancelar"
+					onclick="PF('novoProfessorDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+				<p:spacer width="10"/>
+				<p:commandButton value="Salvar"
+					action="#{cadastroProfessorBean.salvarProfessor()}"
+					oncomplete="PF('novoProfessorDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+			</div>
+		</f:facet>	
+	</p:dialog>
+
+</h:form>		
+	</ui:define>
+</ui:composition>

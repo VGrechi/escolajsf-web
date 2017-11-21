@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" template="../template.xhtml"> 
+
+<ui:define name="conteudo"> 
+
+<div style="display: flex;">
+	<div class="layout_menu">
+		<h:panelGroup>
+			<p:button value="Turmas"
+				outcome="turmas.xhtml"
+				styleClass="ui-priority-primary botao_menu"/>
+					
+			<p:button value="Atividades"
+				outcome="atividades.xhtml"
+				styleClass="ui-priority-primary botao_menu"/>
+		
+		</h:panelGroup>
+	</div>
+	<div class="layout_main">
+			
+			<ui:insert name="conteudoProf"/>
+		
+	</div>
+</div>
+
+</ui:define>
+</ui:composition>

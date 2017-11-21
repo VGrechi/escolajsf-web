@@ -1,0 +1,67 @@
+@CHARSET "ISO-8859-1";
+.login_body {
+	background: url("#{resource['imagens/fundo.jpg']}") top left no-repeat #f7f7f7;
+    background-size: 100% auto;
+}
+
+.label_escola {
+	font-size: 48px;
+	font-family: "Impact";
+	color: #F7B300;
+	transform: rotate(-15deg);
+	margin-left: 40px;
+	position: fixed;
+}
+
+.logo {
+	margin-top: 50px;
+}
+
+.input {
+	width: 200px;
+	height: 30px;
+}
+
+.label {
+	color: #FFFFFF;
+	text-align: left;
+}
+
+.botao {
+	width: 200px;
+	height: 40px;
+	padding: 0px;
+}
+
+.caixa_login {
+	width: 600px;
+	height: 280px;
+	background-color: #0E395A;
+	text-align: center;
+	border: 3px solid #FFFFFF;
+	z-index: 9999;
+} 
+
+.borda_div {
+	border-right: 3px solid #FFFFFF;
+}
+
+.espaco {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.msg {
+	padding: 5px 0px;
+	margin: 0px;
+}
+
+.error_msg {
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	list-style-type: none;
+	padding: 2px; 
+	color: #CC0000;
+	background: #FFFFFF;
+}

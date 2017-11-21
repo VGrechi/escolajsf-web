@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="../template.xhtml"> 
+
+<ui:define name="conteudo">
+
+	<div class="flex">
+	<div class="layout_menu">
+		<h:panelGroup>
+			<p:button value="Cadastro de Professores"
+				outcome="cadastro-professor.xhtml"
+				styleClass="ui-priority-primary botao_menu"/>
+				<br />
+			<p:button value="Cadastro de Alunos"
+				outcome="cadastro-aluno.xhtml"
+				styleClass="ui-priority-primary botao_menu"/>
+				<br />				
+			<p:button value="Cadastro de Turmas"
+				outcome="cadastro-turmas.xhtml"
+				styleClass="ui-priority-primary botao_menu"/>
+		
+		</h:panelGroup>
+	</div>
+	<div class="layout_main">
+			
+			<ui:insert name="conteudoAdm" />
+		
+	</div>
+</div>
+	
+	
+</ui:define>
+</ui:composition>

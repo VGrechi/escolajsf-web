@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="index-administrador.xhtml"> 
+
+<f:metadata>
+	<f:viewAction action="#{cadastroAlunoBean.init()}" />
+</f:metadata>
+
+<ui:define name="conteudoAdm">
+<h:form id="form">
+	<h1>Cadastro de Alunos</h1>
+	
+	<div align="right" class="espaco">
+		<p:commandButton value="Novo aluno"
+			action="#{cadastroAlunoBean.abrirDialog(null, false)}"
+			oncomplete="PF('novoAlunoDialogWidgetVar').show();"
+			update=":form:novoAlunoDialog"
+			styleClass="ui-priority-primary"/>
+	</div>
+	
+	<p:dataTable value="#{cadastroAlunoBean.listaAlunos}"
+		var="aluno"
+		rowKey="#{aluno}"
+		emptyMessage="Não há Alunos cadastrados."
+		styleClass="espaco">
+	
+		<p:column headerText="Cod. Aluno"
+			width="10%"
+			style="text-align: center;">
+			<h:outputText value="#{aluno.codUsuario}" />
+		
+		</p:column>
+		
+		<p:column headerText="Nome">
+			<h:outputText value="#{aluno.nome}" />
+		
+		</p:column>
+		
+		<p:column headerText="E-mail">
+			<h:outputText value="#{aluno.email}" />
+		
+		</p:column>
+		
+		<p:column width="12%">
+			<p:commandButton icon="ui-icon-wrench"
+				action="#{cadastroAlunoBean.abrirDialog(aluno, true)}"
+				oncomplete="PF('novoAlunoDialogWidgetVar').show();"
+				update=":form:novoAlunoDialog"/>
+				
+			<p:commandButton icon="ui-icon-trash"
+				action="#{cadastroAlunoBean.deletarAluno(aluno)}"
+				update="@(.ui-datatable)"/>
+		</p:column>
+	</p:dataTable>
+	
+	
+	
+	<p:dialog id="novoAlunoDialog"
+		widgetVar="novoAlunoDialogWidgetVar"
+		header="Cadastrar Novo Aluno"
+		modal="true">
+		
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Código aluno:"/>
+			<p:inputText value="#{cadastroAlunoBean.aluno.codUsuario}"
+					disabled="true"/>
+			<p:outputLabel value="Nome aluno:"/>
+			<p:inputText value="#{cadastroAlunoBean.aluno.nome}"/>
+			<p:outputLabel value="E-mail aluno:"/>
+			<p:inputText value="#{cadastroAlunoBean.aluno.email}"/>
+			<p:outputLabel value="Senha aluno:"/>
+			<p:password value="#{cadastroAlunoBean.aluno.senha}"/>
+			
+			
+		</h:panelGrid>
+		
+		<f:facet name="footer">
+			<div align="center">
+				<p:commandButton value="Cancelar"
+					onclick="PF('novoAlunoDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+				<p:spacer width="10"/>
+				<p:commandButton value="Salvar"
+					action="#{cadastroAlunoBean.salvarAluno()}"
+					oncomplete="PF('novoAlunoDialogWidgetVar').hide();"
+					styleClass="ui-priority-primary"/>
+			</div>
+		</f:facet>	
+	</p:dialog>
+
+</h:form>		
+	</ui:define>
+</ui:composition>
